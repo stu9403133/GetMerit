@@ -1,16 +1,14 @@
 //
-//  ViewController.swift
+//  GetMeritViewController.swift
 //  GetMerit
 //
-//  Created by stu on 2023/11/29.
+//  Created by stu on 2024/1/23.
 //
 
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
-    
-    
+class GetMeritViewController: UIViewController {
     //顯示總攻得數目的label
     @IBOutlet weak var totalMerit: UILabel!
     
@@ -28,6 +26,7 @@ class ViewController: UIViewController {
     
     //敲擊次數
     var score = 0
+    var colorSet = ButtonColor(red: 1, green: 1, blue: 1, alpha: 1)
     
     //宣告播放器
     let woodenPlayer = AVPlayer()
@@ -57,9 +56,15 @@ class ViewController: UIViewController {
         woodenPlayer.replaceCurrentItem(with: woodenPlayerItem)
         touchPlayer = woodenPlayer
         
-        //設定畫面開始木魚的顏色
-        muyuBell.tintColor = UIColor.systemBrown
+        updateButtonUI()
         
+        
+    }
+    
+    func updateButtonUI() {
+        //設定畫面開始木魚的顏色
+        muyuBell.tintColor = UIColor(red: colorSet.red, green: colorSet.green, blue: colorSet.blue, alpha: colorSet.alpha)
+        print("updateButtonUI: ", colorSet)
     }
     
     @IBAction func touchWoodenFish(_ sender: Any) {
@@ -110,6 +115,19 @@ class ViewController: UIViewController {
             touchPlayer = bellPlayer
         }
     }
+    //  返回頁面接收數據
+    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
+       if let sourece = unwindSegue.source as? ButtonColorViewController {
+           colorSet = sourece.colorSet
+           print("unwind: ", colorSet)
+           updateButtonUI()
+        }
+    }
+    
+    // 進入頁面傳送數據
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let source = segue.destination as? ButtonColorViewController {
+            source.colorSet = colorSet
+        }
+    }
 }
-
-
