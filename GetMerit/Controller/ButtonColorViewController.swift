@@ -8,7 +8,7 @@
 import UIKit
 
 class ButtonColorViewController: UIViewController {
-
+    
     var colorSet: ButtonColor!
     
     @IBOutlet weak var redIndex: UISlider!
@@ -18,12 +18,12 @@ class ButtonColorViewController: UIViewController {
     @IBOutlet weak var segmantedControll: UISegmentedControl!
     @IBOutlet weak var buttonColor: UIImageView!
     
+    @IBOutlet weak var randomButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateSilderUI()
-        updateButtonColor()
-        // Do any additional setup after loading the view.
+        updateButtonUI()
     }
     
     func updateSilderUI() {
@@ -33,23 +33,48 @@ class ButtonColorViewController: UIViewController {
         alphaIndex.value = Float(colorSet.alpha)
     }
     
-    func updateButtonColor() {
+    //更新顏色並儲存
+    func updateButtonUI() {
+        // 調整顏色
         buttonColor.tintColor = UIColor(red: CGFloat(redIndex.value), green: CGFloat(greenIndex.value), blue: CGFloat(blueIndex.value), alpha: CGFloat(alphaIndex.value))
+       
+        //儲存顏色
+        do{
+            setColor()
+            let data = try JSONEncoder().encode(colorSet)
+            UserDefaults.standard.set(data, forKey: "buttonColor")
+            print("save successed", colorSet!)
+        } catch {
+            return print("Encode failed")
+        }
+        //發送notification 傳遞顏色數值到上一頁
+        NotificationCenter.default.post(name: ColorNotifactionName.name, object: nil, userInfo: [ColorNotifactionName.notificationKey : colorSet!])
+        
     }
     
-    @IBAction func ColorChange(_ sender: Any) {
-        updateButtonColor()
+    func setColor(){
+        let redIndex = CGFloat(redIndex.value)
+        let greenIndex = CGFloat(greenIndex.value)
+        let blueIndex = CGFloat(blueIndex.value)
+        let alphaIndex = CGFloat(alphaIndex.value)
+        colorSet = ButtonColor(red: redIndex, green: greenIndex, blue: blueIndex, alpha: alphaIndex)
     }
-  
+    
+    
+    
+    @IBAction func ColorChange(_ sender: Any) {
+        updateButtonUI()
+    }
+    
     
     @IBAction func RandomColor(_ sender: Any) {
         redIndex.setValue(.random(in: (0.1...1)), animated: true)
         greenIndex.setValue(.random(in: (0.1...1)), animated: true)
         blueIndex.setValue(.random(in: (0.1...1)), animated: true)
         alphaIndex.setValue(.random(in: (0.4...1)), animated: true)
-        
-        updateButtonColor()
+        updateButtonUI()
     }
+    
     
     @IBAction func changePage(_ sender: Any) {
         if segmantedControll.selectedSegmentIndex == 0{
@@ -59,14 +84,9 @@ class ButtonColorViewController: UIViewController {
             buttonColor.image = UIImage(named: "bell")
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let redIndex = CGFloat(redIndex.value)
-        let greenIndex = CGFloat(greenIndex.value)
-        let blueIndex = CGFloat(blueIndex.value)
-        let alphaIndex = CGFloat(alphaIndex.value)
-        colorSet = ButtonColor(red: redIndex, green: greenIndex, blue: blueIndex, alpha: alphaIndex)
-    }
+        
     
 
+    
+    
 }

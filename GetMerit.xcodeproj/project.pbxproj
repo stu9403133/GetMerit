@@ -18,15 +18,16 @@
 		207EA6532B172E080090CE04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 207EA6512B172E080090CE04 /* Main.storyboard */; };
 		207EA6552B172E0A0090CE04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 207EA6542B172E0A0090CE04 /* Assets.xcassets */; };
 		207EA6582B172E0A0090CE04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 207EA6562B172E0A0090CE04 /* LaunchScreen.storyboard */; };
+		20DBE0B72BAD78D8005CAFD5 /* ColorNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DBE0B62BAD78D8005CAFD5 /* ColorNotificationName.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		201D52422B1F19ED006F9C64 /* ButtonColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonColorViewController.swift; sourceTree = "<group>"; };
 		202EDFDB2B5FBE4100010CDF /* GetMeritViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMeritViewController.swift; sourceTree = "<group>"; };
 		202EDFDD2B5FBF9000010CDF /* ButtonColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonColor.swift; sourceTree = "<group>"; };
-		204352192B1CA87000C3DD80 /* bellSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bellSound.mp3; sourceTree = SOURCE_ROOT; };
-		2043521A2B1CA87000C3DD80 /* muyuSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = muyuSound.mp3; sourceTree = SOURCE_ROOT; };
-		206AFD032B1888A600B1C35E /* backgroundmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundmusic.mp3; sourceTree = SOURCE_ROOT; };
+		204352192B1CA87000C3DD80 /* bellSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bellSound.mp3; path = GetMerit/Music/bellSound.mp3; sourceTree = SOURCE_ROOT; };
+		2043521A2B1CA87000C3DD80 /* muyuSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = muyuSound.mp3; path = GetMerit/Music/muyuSound.mp3; sourceTree = SOURCE_ROOT; };
+		206AFD032B1888A600B1C35E /* backgroundmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backgroundmusic.mp3; path = GetMerit/Music/backgroundmusic.mp3; sourceTree = SOURCE_ROOT; };
 		207EA6482B172E080090CE04 /* GetMerit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetMerit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		207EA64B2B172E080090CE04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		207EA64D2B172E080090CE04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -34,6 +35,7 @@
 		207EA6542B172E0A0090CE04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		207EA6572B172E0A0090CE04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		207EA6592B172E0A0090CE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20DBE0B62BAD78D8005CAFD5 /* ColorNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorNotificationName.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		202EDFDF2B5FCA1A00010CDF /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				202EDFDD2B5FBF9000010CDF /* ButtonColor.swift */,
+				20DBE0B62BAD78D8005CAFD5 /* ColorNotificationName.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		202EDFE02B5FCA5200010CDF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				202EDFDB2B5FBE4100010CDF /* GetMeritViewController.swift */,
+				201D52422B1F19ED006F9C64 /* ButtonColorViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		202EDFE12B5FCA6D00010CDF /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				2043521A2B1CA87000C3DD80 /* muyuSound.mp3 */,
+				204352192B1CA87000C3DD80 /* bellSound.mp3 */,
+				206AFD032B1888A600B1C35E /* backgroundmusic.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		207EA63F2B172E080090CE04 = {
 			isa = PBXGroup;
 			children = (
@@ -66,18 +96,15 @@
 		207EA64A2B172E080090CE04 /* GetMerit */ = {
 			isa = PBXGroup;
 			children = (
+				202EDFE02B5FCA5200010CDF /* Controller */,
+				202EDFDF2B5FCA1A00010CDF /* Modal */,
 				207EA64B2B172E080090CE04 /* AppDelegate.swift */,
 				207EA64D2B172E080090CE04 /* SceneDelegate.swift */,
-				201D52422B1F19ED006F9C64 /* ButtonColorViewController.swift */,
-				202EDFDB2B5FBE4100010CDF /* GetMeritViewController.swift */,
 				207EA6512B172E080090CE04 /* Main.storyboard */,
-				202EDFDD2B5FBF9000010CDF /* ButtonColor.swift */,
 				207EA6542B172E0A0090CE04 /* Assets.xcassets */,
 				207EA6562B172E0A0090CE04 /* LaunchScreen.storyboard */,
 				207EA6592B172E0A0090CE04 /* Info.plist */,
-				206AFD032B1888A600B1C35E /* backgroundmusic.mp3 */,
-				204352192B1CA87000C3DD80 /* bellSound.mp3 */,
-				2043521A2B1CA87000C3DD80 /* muyuSound.mp3 */,
+				202EDFE12B5FCA6D00010CDF /* Music */,
 			);
 			path = GetMerit;
 			sourceTree = "<group>";
@@ -157,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				202EDFDE2B5FBF9000010CDF /* ButtonColor.swift in Sources */,
+				20DBE0B72BAD78D8005CAFD5 /* ColorNotificationName.swift in Sources */,
 				201D52432B1F19ED006F9C64 /* ButtonColorViewController.swift in Sources */,
 				202EDFDC2B5FBE4100010CDF /* GetMeritViewController.swift in Sources */,
 				207EA64C2B172E080090CE04 /* AppDelegate.swift in Sources */,
@@ -315,7 +343,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -344,7 +372,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

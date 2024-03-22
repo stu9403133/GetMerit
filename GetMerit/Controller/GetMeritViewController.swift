@@ -9,6 +9,7 @@ import UIKit
 import AVFoundation
 
 class GetMeritViewController: UIViewController {
+    
     //顯示總攻得數目的label
     @IBOutlet weak var totalMerit: UILabel!
     
@@ -20,31 +21,71 @@ class GetMeritViewController: UIViewController {
     
     //敲擊的button（木魚或鐘的圖片）
     @IBOutlet weak var muyuBell: UIButton!
-   
+    
     //+1的圖片
     @IBOutlet weak var plusOneImageView: UIImageView!
     
     //敲擊次數
-    var score = 0
-    var colorSet = ButtonColor(red: 1, green: 1, blue: 1, alpha: 1)
+    var score = Int() {
+        didSet{
+            UserDefaults.standard.set(score, forKey: "score")
+            print("來看看有沒有觸發儲存", score)
+        }
+    }
+    
+    var colorSet: ButtonColor!
     
     //宣告播放器
     let woodenPlayer = AVPlayer()
     let bellPlayer = AVPlayer()
     var touchPlayer = AVPlayer()
-    var looper : AVPlayerLooper?
+    var looper : AVPlayerLooper? // 用於重複播放背景音樂
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //設定起始畫面, 背景音樂重複回放
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColorNoti(noti:)), name: ColorNotifactionName.name, object: nil)
+        
+        
+        updateButtonUI()
+        animationConfiguration()
+        updateScore()
+//        UserDefaults.standard.removeObject(forKey: "score") // 刪除儲存
+    }
+    
+    
+    
+    // 讀取上次紀錄和更新分數
+    func updateScore() {
+        score = UserDefaults.standard.integer(forKey: "score")
+        print("updateScore():", score)
+        totalMerit.text = String(score)
+    }
+    
+    //設定畫面開始木魚的顏色
+    func updateButtonUI() {
+        if let data = UserDefaults.standard.data(forKey: "buttonColor") {
+            do{
+                colorSet = try JSONDecoder().decode(ButtonColor.self, from: data)
+                
+                muyuBell.tintColor = UIColor(red: colorSet.red, green: colorSet.green, blue: colorSet.blue, alpha: colorSet.alpha)
+                print("儲存成功，並呈現", colorSet!)
+            } catch {
+                muyuBell.tintColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+                print("儲存失敗，此為預設顏色")
+            }
+        }
+    }
+    
+    //設定起始畫面, 背景音樂重複回放
+    func animationConfiguration() {
         let backgroundUrl = Bundle.main.url(forResource: "backgroundmusic", withExtension: "mp3")!
         let playerItem = AVPlayerItem(url: backgroundUrl)
         let backgroundPlayer = AVQueuePlayer()
         self.looper = AVPlayerLooper(player: backgroundPlayer, templateItem: playerItem)
         backgroundPlayer.play()
-
+        
         //宣告音效的player和url
         let bellUrl = Bundle.main.url(forResource: "bellSound", withExtension: "mp3")!
         let bellPlayerItam = AVPlayerItem(url: bellUrl)
@@ -55,17 +96,20 @@ class GetMeritViewController: UIViewController {
         bellPlayer.replaceCurrentItem(with: bellPlayerItam)
         woodenPlayer.replaceCurrentItem(with: woodenPlayerItem)
         touchPlayer = woodenPlayer
-        
-        updateButtonUI()
-        
-        
     }
     
-    func updateButtonUI() {
-        //設定畫面開始木魚的顏色
-        muyuBell.tintColor = UIColor(red: colorSet.red, green: colorSet.green, blue: colorSet.blue, alpha: colorSet.alpha)
-        print("updateButtonUI: ", colorSet)
+    
+    
+    
+    // Notification 相關的function
+    @objc func updateColorNoti(noti: Notification){
+        if let userInfo = noti.userInfo,
+           let color = userInfo[ColorNotifactionName.notificationKey] as? ButtonColor{
+            colorSet = color
+            muyuBell.tintColor = UIColor(red: colorSet.red, green: colorSet.green, blue: colorSet.blue, alpha: colorSet.alpha)
+        }
     }
+    
     
     @IBAction func touchWoodenFish(_ sender: Any) {
         //點一下木魚數字跟著加1
@@ -115,14 +159,6 @@ class GetMeritViewController: UIViewController {
             touchPlayer = bellPlayer
         }
     }
-    //  返回頁面接收數據
-    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
-       if let sourece = unwindSegue.source as? ButtonColorViewController {
-           colorSet = sourece.colorSet
-           print("unwind: ", colorSet)
-           updateButtonUI()
-        }
-    }
     
     // 進入頁面傳送數據
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -130,4 +166,15 @@ class GetMeritViewController: UIViewController {
             source.colorSet = colorSet
         }
     }
+    
+    //  返回頁面接收數據
+    @IBAction func unwindToGetMerit(for unwindSegue: UIStoryboardSegue) {
+        if let sourece = unwindSegue.source as? ButtonColorViewController {
+            colorSet = sourece.colorSet
+            print("unwind: ", colorSet!)
+            updateButtonUI()
+        }
+    }
+    
+    
 }
